@@ -1,0 +1,28 @@
+//加载原图片
+load sample\jpg-136.jpg
+
+//显示原图片的灰度直方图
+hist
+
+linear --a 0.8
+
+linear --a 0.8 --b 20
+
+linear --a -1 --b 255
+
+
+save -o handled -f output\jpg-136\linear-a0.8.jpg
+
+log -c 3
+
+
+gama -c 1 -y 2
+save -o handled -f output\jpg-136\gama-c1-y2.jpg
+
+bit 8 
+save -o handled -f output\jpg-136\bit8.jpg
+
+mean
+
+mean -c 5
+save -o handled -f output\jpg-136\mean-c5.jpg

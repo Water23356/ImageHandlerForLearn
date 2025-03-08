@@ -1,0 +1,6 @@
+//加载原图片
+load sample\jpg-136.jpg -g
+
+mean -c 9 -g
+
+syn

@@ -1,0 +1,32 @@
+
+// 加载原图片(彩色)
+load sample\example.jpg
+
+// 灰度化加载
+load sample\example.jpg -g
+
+// 将原图的通道值写入文件
+write -f output\origin-data-1.txt
+
+load sample\jpg-12.jpg
+ 
+//缩放
+resize 0.9
+
+// 调整灰度级数
+gray 16
+
+// 缩放
+resize 0.75
+resize 0.50
+resize 0.25
+resize 0.10
+resize 0.05
+
+save -o handled -f output\handled-1.jpg
+save -o handled -f output\resize-0.50.jpg
+
+
+save -o handled -f output\gray-32.jpg
+save -o handled -f output\gray-4.jpg
+
