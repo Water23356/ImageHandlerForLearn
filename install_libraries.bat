@@ -14,5 +14,8 @@ pip install matplotlib
 REM 安装PyQt5库
 pip install PyQt5
 
+REM 安装rich库
+pip install rich
+
 REM 恢复pip的默认镜像源
 set PIP_INDEX_URL=
