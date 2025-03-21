@@ -26,3 +26,8 @@ mean
 
 mean -c 5
 save -o handled -f output\jpg-136\mean-c5.jpg
+
+
+
+load output\jpg-136\noise-sp-0.05.jpg
+mbulr -c 3

@@ -4,19 +4,13 @@ from PyQt5.QtCore import QObject, pyqtSignal, QThread
 import Global
 
 
-# 自定义信号类
-class LogThreadSignals(QObject):
-    finished = pyqtSignal(np.ndarray)  # 传递处理后的图像
-    errorOccurred = pyqtSignal(str)   # 传递错误信息
-
-
 # 子线程任务类
 class LogThread(QThread):
     def __init__(self, image, c):
         super().__init__()
         self.image = image.copy()  # 避免直接修改原图像
         self.c = c
-        self.signals = LogThreadSignals()
+        self.signals = Global.ThreadSignals()
 
     def run(self):
         try:

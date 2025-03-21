@@ -1,0 +1,78 @@
+// 将图片加载到待处理区
+load <路径>
+load sample\example.jpg
+
+// 加载为灰度图
+load <路径> -g
+load sample\example.jpg -g
+
+
+// 将原图的通道值写入文件
+write -f <保存路径>
+write -f output\origin-data-1.txt
+
+// 将处理后的通道值写入文件
+write -o handled -f <保存路径>
+
+
+// 缩放处理
+resize <缩放倍数>
+resize 0.9
+
+// 保存原图
+save -f <保存路径>
+// 保存处理后的图片
+save -o handled -f <保存路径>
+save -o handled -f output\handled-1.jpg
+
+
+// 比较两幅图像
+compare <图像1路径> <图像2路径>
+
+
+// 同步图像显示区域
+syn
+
+
+//灰度级处理, 将灰度级映射到16
+gray 16
+
+
+// 线性处理  s = a*r+b, a=0.8,b=20
+linear -a 0.8 -b 20
+
+
+// log 处理 s = c*log(1+r), c=3
+log -c 3
+
+
+// 伽马处理 s = c*r^y, c=1, y=2
+gama -c 1 -y 2
+
+
+// 比特分层处理, 取第7层比特值
+bit 7
+
+
+// 平滑均值处理, 卷积核大小为5
+mean -c 5
+
+// 高斯均值处理, 卷积和大小为9
+mean -c 9 -g
+
+
+// 展示直方图(原图)
+hist
+// 展示直方图(处理图)
+hist -o handled
+
+
+// 直方图均衡化处理
+hist equalize
+
+
+// 添加椒盐噪声处理, 椒盐概率 = 0.05
+noise sp 0.05
+
+
+

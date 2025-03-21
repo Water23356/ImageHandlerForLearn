@@ -1,6 +1,7 @@
 import os
 import cv2
 from PyQt5.QtCore import QObject, pyqtSignal, QThread
+import numpy as np
 import Global
 from console import Printer as printer
 
@@ -13,17 +14,22 @@ class SaveThreadSignals(QObject):
 
 # 子线程任务类
 class SaveThread(QThread):
-    def __init__(self, image, path):
+    def __init__(self, image, path,saveAsNpy):
         super().__init__()
         self.image = image
         self.path = path
+        self.saveAsNpy = saveAsNpy
         self.signals = SaveThreadSignals()
 
     def run(self):
         Global.taskThreadRunning = True
         try:
-            cv2.imwrite(self.path, self.image)
-            self.signals.finished.emit(f"保存成功: {self.path}")
+            if self.saveAsNpy:
+                np.save(self.path, self.image)
+                self.signals.finished.emit(f"保存成功: {self.path}")
+            else:
+                cv2.imwrite(self.path, self.image)
+                self.signals.finished.emit(f"保存成功: {self.path}")
         except Exception as e:
             self.signals.errorOccurred.emit(f"保存失败: {e}")
         finally:
@@ -49,7 +55,7 @@ def execute_function(args):
     def on_error(message):
         Global.print(message)
 
-    thread = SaveThread(img, path)
+    thread = SaveThread(img, path,args.npy)
     thread.signals.finished.connect(on_finished)
     thread.signals.errorOccurred.connect(on_error)
     thread.start()
@@ -77,5 +83,11 @@ subcommand = {
             "type": str,
             "required": True,
         },
+        {
+            "name": ('-n', '--npy'),
+            "help": "保存为npy格式",
+            "action": "store_true",
+            "default": False
+        }
     )
 }

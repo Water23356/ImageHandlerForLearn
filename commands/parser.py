@@ -37,6 +37,7 @@ def init_parser():
                 printer.print_error(f"警告：无法导入模块 {module_name}")
             except Exception as e:
                 printer.print_error(f"警告：无法导入模块 {module_name}: {e}")
+                raise e
 
     return parser
 
@@ -53,8 +54,11 @@ def register_subparser(subparsers,subcommand):
     del subcommand["subcommands"]
     subparser:argparse.ArgumentParser = subparsers.add_parser(head, **subcommand) # type: ignore
     
+    # print(type(args))
     # 注册子指令的参数
-    if(not isinstance(args,tuple)):
+    if args is None:
+        pass
+    elif(not isinstance(args,tuple)):
         name_or_flags = args["name"]
         del args["name"]
         if isinstance(name_or_flags,tuple):

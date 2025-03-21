@@ -1,6 +1,49 @@
 //加载原图片
 load sample\jpg-136.jpg -g
 
+//高斯平滑
 mean -c 9 -g
 
+//对比两张图
+compare output\jpg-136\origin.jpg output\jpg-136\mean-c9.jpg
+
+//同步对比
 syn
+
+//添加噪声
+//添加椒盐噪声, 概率为 0.05
+noise sp 0.05
+
+
+load output\jpg-136\dft.npy -n
+load output\jpg-136\dft-r.npy -n
+load output\jpg-136\dft-a.npy -n
+idft
+
+
+
+
+
+create fill 1000 1000
+fill --x 350 --width 300 --y 475 --height 50 -v 255
+
+
+load output\jpg-136\dft.npy -n
+load output\jpg-136\dft-a.npy -n
+idft -a
+save -o handled -f output\jpg-136\idft-a.jpg
+
+
+load output\jpg-136\dft-r.npy -n
+idft -r
+save -o handled -f output\jpg-136\idft-r.jpg
+
+compare output\jpg-136\origin.jpg output\jpg-136\idft-r.jpg
+compare output\jpg-136\origin.jpg output\jpg-136\idft-a.jpg
+
+output\image-1\dft-a.npy
+
+
+load sample\jpg-136.jpg -g
+laplacian
+blend add

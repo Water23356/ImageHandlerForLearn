@@ -47,12 +47,6 @@ def generate_gaussian_kernel(size, sigma=1.0):
     return kernel
 
 
-# 自定义信号类
-class MeanThreadSignals(QObject):
-    finished = pyqtSignal(np.ndarray)  # 传递处理后的图像
-    errorOccurred = pyqtSignal(str)   # 传递错误信息
-
-
 # 子线程任务类
 class MeanThread(QThread):
     def __init__(self, image, gaussian, coreSize):
@@ -60,7 +54,7 @@ class MeanThread(QThread):
         self.image = image.copy()  # 避免直接修改原图像
         self.coreSize = coreSize
         self.gaussian = gaussian
-        self.signals = MeanThreadSignals()
+        self.signals = Global.ThreadSignals()
 
     def run(self):
         try:
