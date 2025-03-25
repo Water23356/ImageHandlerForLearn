@@ -47,3 +47,15 @@ output\image-1\dft-a.npy
 load sample\jpg-136.jpg -g
 laplacian
 blend add
+
+load sample\jpg-136.jpg -g
+sobel
+save -o handled -f output\jpg-136\sobel-h.jpg
+sobel -v
+save -o handled -f output\jpg-136\sobel-v.jpg
+
+conv -k 0,0,3,0,0 0,1,2,1,0 3,2,-24,2,3 0,1,2,1,0 0,0,3,0,0
+save -o handled -f output\jpg-136\conv-0,0,3,0,0;0,1,2,1,0;3,2,-24,2,3;0,1,2,1,0;0,0,3,0,0.jpg
+
+compare output\jpg-136\origin.jpg output\jpg-136\sobel-h.jpg
+compare output\jpg-136\origin.jpg output\jpg-136\sobel-v.jpg
