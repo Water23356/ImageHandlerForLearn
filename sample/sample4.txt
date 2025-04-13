@@ -1,0 +1,68 @@
+load sample\jpg-136.jpg -g
+
+
+// 以原图为模板创建 butterworth 滤波器
+// 截止频率: 30   阶数: 2
+create butterworth 0 0 -o --cutoff 30 --order 2
+
+
+save -o handled -f output\jpg-136\ft\origin.npy -n
+save -o handled -f output\jpg-136\ft\butterworth_m.npy -n
+
+// 应用 butterworth 滤波器
+// 截止频率: 30   阶数: 2
+apply butterworth -o 2 -c 30 --idft
+
+// 保存处理后的频域谱
+save -f output\jpg-136\ft\butterworth-o2-c30.npy -n
+// 保存处理后的图像
+save -o handled -f output\jpg-136\ft\butterworth-o2-c30.jpg
+
+
+load output\jpg-136\ft\origin.npy -n
+
+
+
+load sample\jpg-136.jpg -g
+
+apply butterworth -o 2 -c 30 --dft --idft
+save -o handled -f output\jpg-136\ft\butterworth-o2-c30.jpg
+
+apply butterworth -o 2 -c 20 --dft --idft
+save -o handled -f output\jpg-136\ft\butterworth-o2-c20.jpg
+
+apply butterworth -o 2 -c 50 --dft --idft
+save -o handled -f output\jpg-136\ft\butterworth-o2-c50.jpg
+
+apply butterworth -o 2 -c 100 --dft --idft
+save -o handled -f output\jpg-136\ft\butterworth-o2-c100.jpg
+
+apply butterworth -o 2 -c 200 --dft --idft
+save -o handled -f output\jpg-136\ft\butterworth-o2-c200.jpg
+
+
+
+load sample\jpg-136.jpg -g
+
+apply gauss_high -c 30 --dft --idft
+save -o handled -f output\jpg-136\ft\gauss_high-c30.jpg
+
+apply gauss_high -c 20 --dft --idft
+save -o handled -f output\jpg-136\ft\gauss_high-c20.jpg
+
+apply gauss_high -c 50 --dft --idft
+save -o handled -f output\jpg-136\ft\gauss_high-c50.jpg
+
+apply gauss_high -c 100 --dft --idft
+save -o handled -f output\jpg-136\ft\gauss_high-c100.jpg
+
+apply gauss_high -c 200 --dft --idft
+save -o handled -f output\jpg-136\ft\gauss_high-c200.jpg
+
+blend add
+save -o handled -f output\jpg-136\ft\gauss_high-c200-blended.jpg
+save -o handled -f output\jpg-136\ft\gauss_high-c50-blended.jpg
+
+apply laplac_high --dft --idft
+save -o handled -f output\jpg-136\ft\laplac_high.jpg
+

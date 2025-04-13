@@ -59,3 +59,12 @@ save -o handled -f output\jpg-136\conv-0,0,3,0,0;0,1,2,1,0;3,2,-24,2,3;0,1,2,1,0
 
 compare output\jpg-136\origin.jpg output\jpg-136\sobel-h.jpg
 compare output\jpg-136\origin.jpg output\jpg-136\sobel-v.jpg
+compare output\jpg-136\sobel-v.jpg output\jpg-136\sobel-h.jpg
+compare output\jpg-136\origin.jpg output\jpg-136\conv-0,0,3,0,0;0,1,2,1,0;3,2,-24,2,3;0,1,2,1,0;0,0,3,0,0.jpg
+
+load sample\jpg-136.jpg -g
+laplacian -d
+save -o handled -f output\jpg-136\laplacian-d.jpg
+
+compare output\jpg-136\laplacian-d.jpg output\jpg-136\conv-0,0,3,0,0;0,1,2,1,0;3,2,-24,2,3;0,1,2,1,0;0,0,3,0,0.jpg
+

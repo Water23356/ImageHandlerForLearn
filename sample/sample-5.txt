@@ -1,0 +1,9 @@
+compare output\jpg-136\origin.jpg output\jpg-136\ft\butterworth-o2-c20.jpg
+
+compare output\jpg-136\origin.jpg output\jpg-136\ft\gauss_high-c50.jpg
+compare output\jpg-136\origin.jpg output\jpg-136\ft\gauss_high-c50-blended.jpg
+
+compare output\jpg-136\origin.jpg output\jpg-136\ft\gauss_high-c200.jpg
+compare output\jpg-136\origin.jpg output\jpg-136\ft\gauss_high-c200-blended.jpg
+
+apply laplac_high --dft --idft

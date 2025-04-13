@@ -4,7 +4,16 @@ from console import Printer as printer
 from PyQt5.QtCore import QObject, pyqtSignal, QThread
 from matplotlib import pyplot as plt
 
-# 注意: 如果要将 频域谱 保存到图像, 应当选择 .exr格式 进行无损保存, 否则会丢失精度
+def fft_handle(image):
+    if len(image.shape) == 3:
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        
+    img_float32 = np.float32(image)
+    dft = cv2.dft(img_float32, flags=cv2.DFT_COMPLEX_OUTPUT)
+    dft_shift = np.fft.fftshift(dft)
+    return dft_shift
+
+
 
 class HandleThread(QThread):
     def __init__(self,image,show_rad,show_amplitude):
@@ -16,18 +25,8 @@ class HandleThread(QThread):
 
     def run(self):
         try:
-            # 确保图像是灰度图像
-            if len(self.image.shape) == 3:
-                self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-                
-             # 转换为浮点数（OpenCV DFT要求）
-            img_float32 = np.float32(self.image)
-            
-            # 执行傅里叶变换（输出双通道：实部和虚部）
-            dft = cv2.dft(img_float32, flags=cv2.DFT_COMPLEX_OUTPUT)
-            
-            # 将低频移到频谱中心
-            dft_shift = np.fft.fftshift(dft)
+            # 得到傅里叶变换结果(已平移至中心)
+            dft_shift = fft_handle(self.image)
             
             # 提取实部和虚部
             real_part = dft_shift[:, :, 0]
